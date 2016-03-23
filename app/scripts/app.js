@@ -25,9 +25,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.displayInstalledToast = function() {
     // Check to make sure caching is actually enabled—it won't be in the dev environment.
-    if (!Polymer.dom(document).querySelector('platinum-sw-cache').disabled) {
-      Polymer.dom(document).querySelector('#caching-complete').show();
-    }
   };
 
   // Listen for template bound event to know when bindings
@@ -50,10 +47,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Scroll page to top and expand header
   app.scrollPageToTop = function() {
     app.$.headerPanelMain.scrollToTop();
-  };
-
-  app.closeDrawer = function() {
-    app.$.paperDrawerPanel.closeDrawer();
   };
 
 })(document);
