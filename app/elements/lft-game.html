@@ -8,10 +8,16 @@
         display: block;
       }
     </style>
-
-    <paper-material elevation="1">
-        Game!
-    </paper-material>
+    <iron-ajax
+        id="modeLoader" auto
+        url="http://localhost:5001/modes"
+        last-response="{{modes}}"></iron-ajax>
+        <template is="dom-repeat" items="[[modes]]">
+            <paper-material id="{{index}}" elevation="1" on-click="send" data-args$="{{index}}">
+                <h1>[[item.name]]</h1>
+                [[item.description]]
+            </paper-material>
+        </template>
   </template>
 
   <script>
@@ -22,10 +28,16 @@
         is: 'lft-game',
 
         properties: {
+            modes: {
+                type: Object,
+                notifies: true
+            }
         },
-
-        ready: function() {
+        send: function(event){
+            var modeId = event.currentTarget.getAttribute("data-args");
+            document.getElementById(modeId).hidden="true";
         }
+
       });
     })();
   </script>
