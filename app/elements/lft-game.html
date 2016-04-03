@@ -4,16 +4,24 @@
 <dom-module id="lft-game">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+        :host {
+            display: block;
+        }
+        .banned {
+            background: #b55;
+            color: #fff;
+        }
+        .picked {
+            background: #55b;
+            color: #fff;
+        }
     </style>
     <iron-ajax
         id="modeLoader" auto
         url="http://localhost:5001/modes/list"
         last-response="{{modes}}"></iron-ajax>
         <template is="dom-repeat" items="[[modes]]">
-            <paper-material id="{{index}}" elevation="1" on-click="send" data-args$="{{index}}">
+            <paper-material id="{{index}}" elevation="1" on-click="click" data-args$="{{index}}">
                 <h1>[[item]]</h1>
             </paper-material>
         </template>
@@ -28,14 +36,48 @@
 
         properties: {
             modes: {
-                type: Object,
+                type: Array,
                 notifies: true
+            },
+            banned: {
+                type: Array,
+                value: []
+            },
+            picked: {
+                type: Array,
+                value: []
             }
         },
 
-        send: function (event) {
-            var modeId = event.currentTarget.getAttribute("data-args");
-            document.getElementById(modeId).hidden="true";
+        click: function (event) {
+            var id = event.currentTarget.getAttribute("data-args");
+            var element = document.getElementById(id);
+
+            if (this.banned.length < 4) {
+                if (this.banned.indexOf(id) === -1 && this.picked.indexOf(id) === -1) {
+                    element.className += " banned";
+                    this.banned.push(id);
+                }
+            } else if (this.picked.length < 4) {
+                if (this.banned.indexOf(id) === -1 && this.picked.indexOf(id) === -1) {
+                    element.className += " picked";
+                    this.picked.push(id);
+                }
+            } else {
+                this.banned = [];
+                this.picked = [];
+
+                while (document.querySelector(".banned")) {
+                    var classes = document.querySelector(".banned").className.slice(0, -" banned".length);
+                    document.querySelector(".banned").className = classes;
+                }
+
+
+                while (document.querySelector(".picked")) {
+                    var classes = document.querySelector(".picked").className.slice(0, -" picked".length);
+                    document.querySelector(".picked").className = classes;
+                }
+            }
         }
       });
     })();
