@@ -43,19 +43,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-bind" id="app">
 
     <paper-scroll-header-panel main id="headerPanelMain" fixed>
-        <paper-toolbar id="mainToolbar" class="medium">
-            <span class="top title">Polymer Starter Kit</span>
+        <paper-toolbar id="mainToolbar" class="medium" justify="start">
+            <a data-route="home" href="{{baseUrl}}">
+                <span class="top title">LFT</span>
+            </a>
+            <a data-route="bracket" href="{{baseUrl}}bracket">Bracket</a>
+            <a data-route="rules" href="{{baseUrl}}rules">Rules</a>
+            <a data-route="game" href="{{baseUrl}}game">Game</a>
         </paper-toolbar>
 
-        <div class="content">
-            <iron-pages attr-for-selected="data-route" selected="{{route}}">
-                <section data-route="home">
-                    <paper-material elevation="1">
-                        Test123
-                    </paper-material>
-                </section>
-            </iron-pages>
-        </div>
+        <iron-pages attr-for-selected="data-route" selected="{{route}}">
+            <section data-route="home">
+                <lft-home></lft-home>
+            </section>
+            <section data-route="bracket">
+                <paper-material elevation="1">
+                    Display bracket here
+                </paper-material>
+            </section>
+            <section data-route="rules">
+                <paper-material elevation="1">
+                    Follow these rules
+                </paper-material>
+            </section>
+            <section data-route="game">
+                <paper-material elevation="1">
+                    GL&amp;HF
+                </paper-material>
+            </section>
+        </iron-pages>
     </paper-scroll-header-panel>
 
     </template>

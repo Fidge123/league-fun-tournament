@@ -23,10 +23,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // app.baseUrl = '/polymer-starter-kit/';
   }
 
-  app.displayInstalledToast = function() {
-    // Check to make sure caching is actually enabled—it won't be in the dev environment.
-  };
-
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
@@ -35,13 +31,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
-  });
-
-  // Main area's paper-scroll-header-panel custom condensing transformation of
-  // the appName in the middle-container and the bottom title in the bottom-container.
-  // The appName is moved to top and shrunk on condensing. The bottom sub title
-  // is shrunk to nothing on condensing.
-  window.addEventListener('paper-header-transform', function(e) {
   });
 
   // Scroll page to top and expand header
