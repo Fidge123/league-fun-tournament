@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Polymer Starter Kit">
-    <title>Polymer Starter Kit</title>
+    <title>League Fun Tournament</title>
 
     <!-- Place favicon.ico in the `app/` directory -->
 
@@ -46,10 +46,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a data-route="home" href="{{baseUrl}}">
                 <span class="top title">LFT</span>
             </a>
-            <a data-route="bracket" href="https://challonge.com/">Bracket</a>
-            <!-- <a data-route="bracket" href="{{baseUrl}}bracket">Bracket</a> -->
             <a data-route="rules" href="{{baseUrl}}rules">Rules</a>
             <a data-route="game" href="{{baseUrl}}game">Game</a>
+            <a data-route="bracket" href="https://challonge.com/">
+                <span>Bracket</span>
+                <iron-icon icon="exit-to-app"></iron-icon>
+            </a>
+            <!-- <a data-route="bracket" href="{{baseUrl}}bracket">Bracket</a> -->
         </paper-toolbar>
 
         <iron-pages attr-for-selected="data-route" selected="{{route}}">
