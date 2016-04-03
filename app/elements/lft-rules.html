@@ -7,6 +7,14 @@
         :host {
             display: block;
         }
+        paper-dialog{
+            width: auto;
+            height: auto;
+        }
+        iron-image {
+            width: 750px;
+            height: 750px;
+        }
     </style>
 
     <iron-ajax
@@ -18,20 +26,41 @@
             <h1>[[item.name]]</h1>
             [[item.description]]
             <h3>Setup</h3>
-            <template is="dom-repeat" items=[[item.setup]]>
-                [[item.text]]
-            </template>
+            <ol>
+                <template is="dom-repeat" items=[[item.setup]]>
+                    <li>[[item.text]]
+                        <template is="dom-if" if="[[item.image]]">
+                            <paper-icon-button icon="feedback" on-click="clicki([[item.image]])"/>
+                        </template>
+                    </li>
+                </template>
+            </ol>
             <h3>Win conditions</h3>
-            <template is="dom-repeat" items=[[item.conditions]]>
-                [[item.text]]
-            </template>
+            <ul>
+                <template is="dom-repeat" items=[[item.conditions]]>
+                    <li>[[item.text]]
+                        <template is="dom-if" if="[[item.image]]">
+                        <paper-icon-button icon="feedback" on-click="clicki([[item.image]])"/>
+                    </template></li>
+                </template>
+            </ul>
             <h3>Rules</h3>
-            <template is="dom-repeat" items=[[item.rules]]>
-                [[item.text]]
-            </template>
+            <ol>
+                <template is="dom-repeat" items=[[item.rules]]>
+                    <li>[[item.text]]
+                        <template is="dom-if" if="[[item.image]]">
+                            <paper-icon-button icon="feedback" on-click="click"/>
+                        </template>
+                    </li>
+                </template>
+            </ol>
         </paper-material>
     </template>
+    <paper-dialog id="dia">
+        <iron-image src="http://localhost:5001/image/hideHUD.png" sizing="contain" ></iron-image>
+    </paper-dialog>
   </template>
+
 
   <script>
     (function() {
@@ -47,7 +76,14 @@
             }
         },
 
-        ready: function() {
+        ready: function(item) {
+        },
+        click: function(){
+            this.$.dia.open();
+        },
+        clicki: function(imagepath){
+            this.$.dia.src="http://localhost:5001/image/{{imagepath}}"
+            this.$.dia.open();
         }
       });
     })();
