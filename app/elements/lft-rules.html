@@ -4,14 +4,33 @@
 <dom-module id="lft-rules">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+        :host {
+            display: block;
+        }
     </style>
 
-    <paper-material elevation="1">
-        Rules!
-    </paper-material>
+    <iron-ajax
+        id="modeLoader" auto
+        url="http://localhost:5001/modes"
+        last-response="{{modes}}"></iron-ajax>
+    <template is="dom-repeat" items="[[modes]]">
+        <paper-material elevation="1">
+            <h1>[[item.name]]</h1>
+            [[item.description]]
+            <h3>Setup</h3>
+            <template is="dom-repeat" items=[[item.setup]]>
+                [[item.text]]
+            </template>
+            <h3>Win conditions</h3>
+            <template is="dom-repeat" items=[[item.conditions]]>
+                [[item.text]]
+            </template>
+            <h3>Rules</h3>
+            <template is="dom-repeat" items=[[item.rules]]>
+                [[item.text]]
+            </template>
+        </paper-material>
+    </template>
   </template>
 
   <script>
@@ -22,6 +41,10 @@
         is: 'lft-rules',
 
         properties: {
+            modes: {
+                type: Object,
+                notifies: true
+            }
         },
 
         ready: function() {
