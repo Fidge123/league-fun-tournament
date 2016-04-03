@@ -10,12 +10,11 @@
     </style>
     <iron-ajax
         id="modeLoader" auto
-        url="http://localhost:5001/modes"
+        url="http://localhost:5001/modes/list"
         last-response="{{modes}}"></iron-ajax>
         <template is="dom-repeat" items="[[modes]]">
             <paper-material id="{{index}}" elevation="1" on-click="send" data-args$="{{index}}">
-                <h1>[[item.name]]</h1>
-                [[item.description]]
+                <h1>[[item]]</h1>
             </paper-material>
         </template>
   </template>
@@ -33,11 +32,11 @@
                 notifies: true
             }
         },
-        send: function(event){
+
+        send: function (event) {
             var modeId = event.currentTarget.getAttribute("data-args");
             document.getElementById(modeId).hidden="true";
         }
-
       });
     })();
   </script>
