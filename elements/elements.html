@@ -19199,7 +19199,7 @@ module.exports = Array.isArray || function (arr) {
         }
     </style>
 
-    <iron-ajax id="modeLoader" auto="" url="http://localhost:5001/modes" last-response="{{modes}}"></iron-ajax>
+    <iron-ajax id="modeLoader" auto="" url="http://54.209.166.62:5001/modes" last-response="{{modes}}"></iron-ajax>
     <template is="dom-repeat" items="[[modes]]">
         <paper-material elevation="1">
             <h1>[[item.name]]</h1>
@@ -19240,7 +19240,7 @@ module.exports = Array.isArray || function (arr) {
         </paper-material>
     </template>
     <paper-dialog id="dialog">
-        <iron-image id="image" src="http://localhost:5001/image/hideHUD.png" sizing="contain"></iron-image>
+        <iron-image id="image" src="http://54.209.166.62:5001/image/hideHUD.png" sizing="contain"></iron-image>
     </paper-dialog>
   </template>
 
@@ -19260,7 +19260,7 @@ module.exports = Array.isArray || function (arr) {
         },
 
         click: function(event) {
-            this.$.image.src = "http://localhost:5001/image/" + event.currentTarget.getAttribute("data-args");
+            this.$.image.src = "http://54.209.166.62:5001/image/" + event.currentTarget.getAttribute("data-args");
             this.$.dialog.open();
         }
       });
@@ -19289,7 +19289,7 @@ module.exports = Array.isArray || function (arr) {
             margin-bottom: 60px;
         }
     </style>
-    <iron-ajax id="modeLoader" auto="" url="http://localhost:5001/modes/list" last-response="{{modes}}"></iron-ajax>
+    <iron-ajax id="modeLoader" auto="" url="http://54.209.166.62:5001/modes/list" last-response="{{modes}}"></iron-ajax>
     <paper-material id="header" elevation="2">
         <h1 id="message"></h1>
         <paper-button on-click="generate" data-args$="{{index}}" raised="">Generate</paper-button>
