@@ -15,16 +15,30 @@
             background: #55b;
             color: #fff;
         }
+        h1 {
+            display: block;
+            width: 50%;
+        }
+        paper-material#header {
+            margin-bottom: 60px;
+        }
     </style>
     <iron-ajax
         id="modeLoader" auto
         url="http://localhost:5001/modes/list"
         last-response="{{modes}}"></iron-ajax>
-        <template is="dom-repeat" items="[[modes]]">
-            <paper-material id="{{index}}" elevation="1" on-click="click" data-args$="{{index}}">
-                <h1>[[item]]</h1>
-            </paper-material>
-        </template>
+    <paper-material id="header" elevation="2">
+        <h1 id="message"></h1>
+        <paper-button on-click="generate" data-args$="{{index}}" raised>Generate</paper-button>
+        <paper-button on-click="reset" data-args$="{{index}}" raised>Reset</paper-button>
+    </paper-material>
+    <template is="dom-repeat" items="[[modes]]">
+        <paper-material id="{{index}}" elevation="1">
+            <h1>[[item]]</h1>
+            <paper-button on-click="pick" data-args$="{{index}}" raised>Pick</paper-button>
+            <paper-button on-click="ban" data-args$="{{index}}" raised>Ban</paper-button>
+        </paper-material>
+    </template>
   </template>
 
   <script>
@@ -49,35 +63,53 @@
             }
         },
 
-        click: function (event) {
+        pick: function (event) {
             var id = event.currentTarget.getAttribute("data-args");
             var element = document.getElementById(id);
 
-            if (this.banned.length < 4) {
-                if (this.banned.indexOf(id) === -1 && this.picked.indexOf(id) === -1) {
-                    element.className += " banned";
-                    this.banned.push(id);
-                }
-            } else if (this.picked.length < 4) {
-                if (this.banned.indexOf(id) === -1 && this.picked.indexOf(id) === -1) {
-                    element.className += " picked";
-                    this.picked.push(id);
-                }
-            } else {
-                this.banned = [];
-                this.picked = [];
-
-                while (document.querySelector(".banned")) {
-                    var classes = document.querySelector(".banned").className.slice(0, -" banned".length);
-                    document.querySelector(".banned").className = classes;
-                }
-
-
-                while (document.querySelector(".picked")) {
-                    var classes = document.querySelector(".picked").className.slice(0, -" picked".length);
-                    document.querySelector(".picked").className = classes;
-                }
+            if (this.banned.indexOf(id) !== -1) {
+                var classes = document.getElementById(id).className.slice(0, -" banned".length);
+                document.getElementById(id).className = classes;
             }
+
+            element.className += " picked";
+            this.picked.push(id);
+        },
+
+        ban: function (event) {
+            var id = event.currentTarget.getAttribute("data-args");
+            var element = document.getElementById(id);
+
+            if (this.picked.indexOf(id) !== -1) {
+                var classes = document.getElementById(id).className.slice(0, -" picked".length);
+                document.getElementById(id).className = classes;
+            }
+
+            element.className += " banned";
+            this.banned.push(id);
+        },
+
+        generate: function () {
+            var item = this.picked[Math.floor(Math.random() * this.picked.length)];
+
+            document.getElementById("message").innerHTML = "Generated Modus: " + this.modes[item];
+        },
+
+        reset: function () {
+            this.banned = [];
+            this.picked = [];
+
+            while (document.querySelector(".banned")) {
+                var classes = document.querySelector(".banned").className.slice(0, -" banned".length);
+                document.querySelector(".banned").className = classes;
+            }
+
+            while (document.querySelector(".picked")) {
+                var classes = document.querySelector(".picked").className.slice(0, -" picked".length);
+                document.querySelector(".picked").className = classes;
+            }
+
+            document.getElementById("message").innerHTML = "";
         }
       });
     })();
