@@ -23,10 +23,7 @@
             margin-bottom: 60px;
         }
     </style>
-    <iron-ajax
-        id="modeLoader" auto
-        url="http://localhost:5001/modes/list"
-        last-response="{{modes}}"></iron-ajax>
+
     <paper-material id="header" elevation="2">
         <h1 id="message"></h1>
         <paper-button on-click="generate" data-args$="{{index}}" raised>Generate</paper-button>
@@ -51,7 +48,17 @@
         properties: {
             modes: {
                 type: Array,
-                notifies: true
+                notifies: true,
+                value: [
+                    "Baron Dodgeball",
+                    "Blind Mode",
+                    "Easy Bot Powerfarming",
+                    "Intermediate Bot Challenge",
+                    "Mouse Only",
+                    "Protect the Leona",
+                    "Ultimate Bravery",
+                    "Zoom And Lock"
+                ]
             },
             banned: {
                 type: Array,

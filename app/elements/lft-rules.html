@@ -25,10 +25,6 @@
         }
     </style>
 
-    <iron-ajax
-        id="modeLoader" auto
-        url="http://localhost:5001/modes"
-        last-response="{{modes}}"></iron-ajax>
     <template is="dom-repeat" items="[[modes]]">
         <paper-material elevation="1">
             <h1>[[item.name]]</h1>
@@ -69,7 +65,7 @@
         </paper-material>
     </template>
     <paper-dialog id="dialog">
-        <iron-image id="image" src="http://localhost:5001/image/hideHUD.png" sizing="contain" ></iron-image>
+        <iron-image id="image" sizing="contain"></iron-image>
     </paper-dialog>
   </template>
 
@@ -84,12 +80,220 @@
         properties: {
             modes: {
                 type: Object,
-                notifies: true
+                notifies: true,
+                value: [{
+                        "name":"Allgemeine 1v1 Regeln",
+                        "conditions":[{
+                                "text":"Siehe jeweiligen Modus"
+                            }
+                        ],
+                        "setup":[{
+                                "text":"Spiele in der Vorrunde sind Best of 1. In der Hauptrunde sind alle Spiele Best of 3 und das Finale Best of 5."
+                            }, {
+                                "text":"Zuerst wird der Spielmodus bestimmt. Jeder Spieler hat dazu 2 Bans und 2 Picks. Ein Modus kann auch von beiden Spielern gewählt werden. Aus den gewählten Modi per Zufall bestimmt und gespielt."
+                            }, {
+                                "text":"Danach werden die Champions gewählt. In den Spielen der Hauptrunde dürfen je Spieler im Chat 3 Bans geschrieben werden."
+                            }
+                        ],
+                        "description":"Diese Regeln gelten als Grundlage für alle Modi.",
+                        "rules":[{
+                                "punishment":"Automatische Niederlage",
+                                "text":"Es wird auf der Toplane gespielt. Verlassen der Lane ist verboten. Bei Knockback muss direkt zurückgelaufen werden."
+                            }, {
+                                "punishment":"Automatische Niederlage",
+                                "text":"Globale Fähigkeitne dürfen nicht ausschließlich zum Töten von Minions in anderen Lanes verwendet werden"
+                            }, {
+                                "text":"Bei Lag oder Disconnect durch das Netzwerk wird das Matchs mit gleichen Modus/Champions wiederholt. Auf Nachfrage muss Nachweis erbracht werden (z.B. durch ShadowPlay)"
+                            }, {
+                                "punishment":"Wiederholung des Spiels",
+                                "text":"Alle Runen und Masteries erlaubt. Wenn ein Spieler unter Level 30 ist, dürfen beide Spieler nur gleich viele Runen und Masteries verwenden."
+                            }
+                        ]
+                    }, {
+                        "name":"Baron Dodgeball",
+                        "conditions":[{
+                                "text":"Gewinner ist, wer das First Blood verursacht"
+                            }
+                        ],
+                        "setup":[{
+                                "text":"Nahkampf-Champion mit Skillshot Fähigkeit auswählen"
+                            }, {
+                                "image":"pinkAndTrinket.png",
+                                "text":"Gelbes Trinket und Pinkward kaufen"
+                            }, {
+                                "image":"wardline.png",
+                                "text":"Wards als Mittellinie in der Baronpit platzieren"
+                            }
+                        ],
+                        "description":"Skillshot Dodgeball in der Baronpit.",
+                        "rules":[{
+                                "punishment":"Neustart",
+                                "text":"Die Mittellinie muss korrekt aufgestellt werden"
+                            }, {
+                                "punishment":"Automatische Niederlage",
+                                "text":"Die Mittellinie darf nicht übertreten werden."
+                            }, {
+                                "punishment":"Automatische Niederlage",
+                                "text":"Es dürfen nur Skillshot Fähigkeiten und defensive Summoners (also kein Ignite) benutzt werden"
+                            }, {
+                                "text":"Es dürfen zusätzlich zu den Wards Items gekauft werden, jedoch maximal 1 Heiltrank"
+                            }
+                        ]
+                    }, {
+                        "name":"Blind Mode",
+                        "conditions":[{
+                                "text":"Das Spiel gewinnt, wer den gegnerischen Turm zerstört."
+                            }
+                        ],
+                        "setup":[{
+                                "image":"hideHealthBars.png",
+                                "text":"Unter Interface > Health and Resource Bars > Show Health Bars muss deaktivert werden"
+                            }, {
+                                "image":"hideHUD.png",
+                                "text":"Unter Hotkeys > Display > Show/Hide HUD einen Shortcut definieren (z.B. Strg-Alt-P) und betätigen"
+                            }, {
+                                "image":"noUI.png",
+                                "text":"Wenn alle Schritte korrekt ausgeführt wurden, sollten alle HUD Elemente versteckt sein"
+                            }
+                        ],
+                        "description":"Alle UI Elemente werden deaktivert oder versteckt.",
+                        "rules":[{
+                                "punishment":"Automatische Niederlage",
+                                "text":"Um Items kaufen zu können, darf das UI per Tastenkombo in der eigenen Basis angezeigt werden. Beim Verlassen der Basis muss es wieder deaktiviert werden."
+                            }, {
+                                "punishment":"Siehe jeweilige Regeln",
+                                "text":"Ansonsten gelten die normalen 1v1 Regeln"
+                            }
+                        ]
+                    }, {
+                        "name":"Easy Bot Powerfarming",
+                        "conditions":[{
+                                "text":"Das Spiel endet nach 15 min oder wenn ein Nexus zerstört wird. Wer mehr Kills hat gewinnt."
+                            }
+                        ],
+                        "setup":[{
+                                "image":"easyBotsLobby.png",
+                                "text":"Beide Spieler sind im gleichem Team. Im anderen Team sind 5 zufällige Easy-Bots"
+                            }
+                        ],
+                        "description":"Wie Co-Op aber dein Teammitglied ist dein Gegner.",
+                        "rules":[{
+                                "text":"Alle Lanes sind erlaubt"
+                            }, {
+                                "text":"Killsteals sind erlaubt"
+                            }, {
+                                "text":"Assists zählen nichts"
+                            }
+                        ]
+                    }, {
+                        "name":"Intermediate Bot Challenge",
+                        "conditions":[{
+                                "text":"Wer schneller gewinnt bzw. länger überlebt gewinnt das Spiel"
+                            }
+                        ],
+                        "setup":[{
+                                "image":"intermediateBotsLobby.png",
+                                "text":"Jeder Spieler erstellt eine Lobby mit 5 Intermediate Bots"
+                            }, {
+                                "text":"Die Bots werden von einem Spieler zufällig hinzugefügt und vom anderen Spieler kopiert"
+                            }, {
+                                "text":"Beide Spieler startet ihr Spiel gleichzeitig"
+                            }
+                        ],
+                        "description":"Wer hält sich länger gegen 5 Intermediate Bots?",
+                        "rules":[{
+                                "punishment":"Automatische Niederlage",
+                                "text":"Pausieren ist nicht erlaubt"
+                            }, {
+                                "text":"Alle Lanes sind erlaubt"
+                            }
+                        ]
+                    }, {
+                        "name":"Mouse Only",
+                        "conditions":[{
+                                "text":"First Blood oder erster Turm gewinnt"
+                            }
+                        ],
+                        "setup":[{
+                                "text":"Wenn möglich die Tastatur abschliessen"
+                            }
+                        ],
+                        "description":"Mehr als 2 Tasten sind viel zu kompliziert.",
+                        "rules":[{
+                                "punishment":"Automatische Niederlage",
+                                "text":"Benutzen der Tastatur ist komplett verboten"
+                            }
+                        ]
+                    }, {
+                        "name":"Protect the Leona",
+                        "conditions":[{
+                                "text":"Gewonnen hat, wer die gegnerische Leona 2 mal tötet"
+                            }
+                        ],
+                        "setup":[{
+                                "image":"leonaBotLobby.png",
+                                "text":"Erstelle eine Lobby mit je einem Beginner Leona Bot pro Seite"
+                            }, {
+                                "text":"Bekämpft euch auf der Botlane"
+                            }
+                        ],
+                        "description":"Töte die gegnerische Leona bevor dein Gegner deine Leona erwischt.",
+                        "rules":[{
+                                "text":"Es ist egal wer aus dem Team Leona tötet"
+                            }, {
+                                "text":"Es darf nur in Lanes gespielt werden in der eine Leona ist"
+                            }
+                        ]
+                    }, {
+                        "name":"Ultimate Bravery",
+                        "conditions":[{
+                                "text":"First Blood oder erster Turm gewinnt"
+                            }
+                        ],
+                        "setup":[{
+                                "text":"Erstelle eine Lobby mit 'All Random' als Modus."
+                            }, {
+                                "text":"Wähle deinen zufälligen Champion auf http://www.ultimate-bravery.com/ aus und generiere einen Build"
+                            }
+                        ],
+                        "description":"Zufälliger Champion, zufällige Skills, zufällige Items.",
+                        "rules":[{
+                                "punishment":"Automatische Niederlage",
+                                "text":"Es müssen alle Anweisungen der Webseite befolgt werden"
+                            }, {
+                                "punishment":"Automatische Niederlage",
+                                "text":"Items müssen in der angezeigten Reihenfolge gebaut werden (Schuhe ausgenommen)"
+                            }
+                        ]
+                    }, {
+                        "name":"Zoom And Lock",
+                        "conditions":[{
+                                "text":"Es hat gewonnen, wer den ersten Turm zerstört"
+                            }
+                        ],
+                        "setup":[{
+                                "image":"zoom.png",
+                                "text":"Kamera maximal ranzoomen"
+                            }, {
+                                "image":"lock.png",
+                                "text":"Kamera zentrieren"
+                            }
+                        ],
+                        "description":"League of Legends für Menschen mit schlechten Augen.",
+                        "rules":[{
+                                "punishment":"Automatische Niederlage",
+                                "text":"Kamera muss immer rangezoomt und zentriert sein"
+                            }, {
+                                "text":"Ansonsten gelten normale 1v1 Regeln"
+                            }
+                        ]
+                    }
+                ]
             }
         },
 
         click: function(event) {
-            this.$.image.src = "http://localhost:5001/image/" + event.currentTarget.getAttribute("data-args");
+            this.$.image.src = "elements/images/" + event.currentTarget.getAttribute("data-args");
             this.$.dialog.open();
         }
       });
